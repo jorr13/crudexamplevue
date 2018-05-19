@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>example</title>
+</head>
+<body>
+    <div id="main">
+        <ul>
+            <li v-for="(person, index) in personas">            
+                {{index}} - {{person.nombre}}, {{person.edad}} años, {{person.edocivil}} 
+                <button v-on:click="dropPersona(index)">X</button> 
+                <button v-on:click="editPersona(index)">editar</button>
+            </li>
+        </ul>
+
+        <input type="text" v-model="nombre" placeholder="ingrese su nombre"><br><br>
+        <input type="text" v-model="edad" placeholder="ingrese su edad" ><br><br>
+        <input type="text" v-model="edocivil" placeholder="ingrese su edocivil"><br><br>
+        <input type="hidden" id="index"  v-model="index">
+            
+        <button v-on:click="createPersona">Agregar</button></a> 
+        <button v-on:click="savePersona">Guardar</button></a> 
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.js"></script>
+    <script>
+        app = new Vue({
+            el: '#main',
+            data: {
+                nombre: '',
+                edad: '',
+                edocivil: '',
+                persona: '',
+                index: '',
+                personas: [
+                    {nombre : 'andres', edad : 29, edocivil : 'casado'},
+                    {nombre : 'luz', edad : 22, edocivil: 'casada'},
+                    {nombre : 'adrian', edad : 23, edocivil : 'casado'},
+                    {nombre : 'jerinson', edad : 22, edocivil : 'viudo'}
+                ],
+            
+            },
+            methods: {
+                createPersona: function(){
+                    app.personas.push({
+                        "nombre" : app.nombre,
+                        "edad" : app.edad,
+                        "edocivil" : app.edocivil
+                    })
+                    nombre: ''
+                    edad: ''
+                    edocivil: ''
+                }, 
+                dropPersona: function(index){
+                    app.personas.splice(index, 1);
+                },
+                editPersona: function(index){
+                    
+                    app.nombre = app.personas[index].nombre;
+                    app.edad = app.personas[index].edad;
+                    app.edocivil = app.personas[index].edocivil;
+                    app.index = index;
+    
+                    
+                },
+                savePersona: function(){
+                    app.personas[app.index].nombre = app.nombre;
+                    app.personas[app.index].edad = app.edad;
+                    app.personas[app.index].edocivil = app.edocivil;   
+                }
+             
+            }
+                    
+        });
+    </script>
+</body>
+</html>
